@@ -1,0 +1,29 @@
+{
+  "device": "ASUS TUF GAMING B650M-PLUS WIFI",
+  "active_mode": "Direct",
+  "zones": [
+    {
+      "name": "Aura Mainboard",
+      "led_count": 1,
+      "colors": [
+        null
+      ]
+    },
+    {
+      "name": "Addressable RGB Header 1",
+      "led_count": 0,
+      "colors": []
+    },
+    {
+      "name": "Addressable RGB Header 2",
+      "led_count": 0,
+      "colors": []
+    },
+    {
+      "name": "Addressable RGB Header 3",
+      "led_count": 0,
+      "colors": []
+    }
+  ],
+  "saved_at": "2026-10-28 23:22:03"
+}

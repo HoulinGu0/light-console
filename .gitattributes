@@ -1,0 +1,29 @@
+# 让 git 自动识别文本文件并统一换行（仓库内 LF，检出时按平台）
+* text=auto
+
+# Windows 批处理与 PowerShell 脚本：检出时必须保持 CRLF，否则 cmd.exe 可能解析异常
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# 二进制：禁止任何换行/编码转换
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.zip  binary
+*.exe  binary
+*.dll  binary
+*.so   binary
+*.pyd  binary
+*.pyc  binary
+
+# 文档与配置：显式声明为文本，便于 diff
+*.md   text
+*.py   text
+*.html text
+*.json text
+*.yml  text
+*.yaml text
+*.txt  text

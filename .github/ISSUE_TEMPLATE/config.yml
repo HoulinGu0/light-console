@@ -1,0 +1,18 @@
+blank_issues_enabled: false
+contact_links:
+  # 注意：fork 或改名后请把下面的 HoulinGu0/light-console 换成你的实际仓库路径
+  - name: 📖 先看排错文档（按症状组织）
+    url: https://github.com/HoulinGu0/light-console/blob/main/docs/TROUBLESHOOTING.md
+    about: 绝大多数「灯不亮 / 识别不到控制器」在这里已有答案
+  - name: 🚀 入门教程
+    url: https://github.com/HoulinGu0/light-console/blob/main/docs/GETTING-STARTED.md
+    about: 从零装好并跑通，约 10 分钟
+  - name: ⚙️ 配置参考
+    url: https://github.com/HoulinGu0/light-console/blob/main/docs/CONFIGURATION.md
+    about: config.json 每个字段的含义，多控制器怎么指定
+  - name: 🔒 报告安全漏洞
+    url: https://github.com/HoulinGu0/light-console/security/policy
+    about: 请走私密通道，不要开公开 issue
+  - name: 💬 讨论区
+    url: https://github.com/HoulinGu0/light-console/discussions
+    about: 不确定是不是 bug、想聊硬件适配，用 Discussions

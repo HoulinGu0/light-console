@@ -1,0 +1,5 @@
+# 运行时依赖（Python 3.10+）
+# 注意：openrgb-python 是 GPL-3.0，决定了本仓库的许可证，见 LICENSE / docs/THIRD-PARTY.md
+openrgb-python>=0.3.8
+mss>=9.0
+numpy>=1.24

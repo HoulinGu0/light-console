@@ -1,0 +1,143 @@
+name: 🐛 Bug 报告
+description: 灯不亮、识别不到、界面异常…… 请先读完排错文档再来
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。这个项目是围绕**一台具体机器**写的，绝大多数问题都与人家的硬件不同有关，
+        所以下面每一项都请尽量填。
+
+        **动手前请先做两件事：**
+        1. 读一遍仓库里的 `docs/TROUBLESHOOTING.md`（按症状组织，多数问题已有答案）
+        2. 跑一次 `python scripts/control.py set --color FF0000`，确认是软件问题还是灯珠数标定问题
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已经读过 docs/TROUBLESHOOTING.md，并跑过其中的检查
+          required: true
+        - label: 我使用的是主分支最新代码
+          required: true
+        - label: 日志与截图中的序列号、主机名、用户名等个人信息已打码
+          required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 现象
+      description: 你期望发生什么？实际发生了什么？
+      placeholder: |
+        期望：切到「流光」后风扇上有一条彗尾在循环移动
+        实际：扫过去一遍之后长时间全黑，像停住了
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 启动 python scripts/server.py
+        2. 打开 http://127.0.0.1:8099/
+        3. 点「流光」，速度设为 5
+        4. 观察机箱风扇
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 问题出在哪个部分
+      multiple: true
+      options:
+        - 连不上 / 没有灯区（OpenRGB 识别问题）
+        - 灯不亮 / 只亮一部分（标定问题）
+        - 灯效表现异常（彩虹 / 呼吸 / 流光 / 波浪）
+        - GPU 联动
+        - 屏幕同步
+        - 界面 / 主题
+        - 命令行工具
+        - 首次运行向导 / config.json
+        - 文档
+    validations:
+      required: true
+
+  - type: textarea
+    id: state
+    attributes:
+      label: /api/state 输出
+      description: |
+        在 PowerShell 里运行并把结果贴在这里：
+        ```powershell
+        (Invoke-WebRequest http://127.0.0.1:8099/api/state -UseBasicParsing).Content
+        ```
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: probe
+    attributes:
+      label: 设备结构
+      description: |
+        ```powershell
+        python scripts/probe_devices.py
+        ```
+        或至少提供 `python scripts/control.py list` 的输出。
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: openrgb-log
+    attributes:
+      label: OpenRGB 日志
+      description: |
+        排查「识别不到控制器」的问题时必填：
+        ```powershell
+        Get-ChildItem "$env:APPDATA\OpenRGB\logs" | Sort-Object LastWriteTime -Desc |
+          Select-Object -First 1 | Get-Content
+        ```
+        关键行是 `Registering RGB controller ...`。
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: hardware
+    attributes:
+      label: 硬件信息
+      description: |
+        ```powershell
+        Get-PnpDevice -PresentOnly | Where-Object { $_.FriendlyName -match 'AURA|RGB|LED' } |
+          Select-Object FriendlyName, InstanceId
+        ```
+        请说明：主板型号、灯控芯片（如果有）、灯带/风扇是接在哪个排针上、每路大约几颗灯珠。
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      description: |
+        ```powershell
+        python --version; pwsh --version
+        ```
+        另请说明显卡型号（GPU 联动相关问题必填）。
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其它补充
+      description: 截图、录屏、你认为相关的任何信息。
+    validations:
+      required: false

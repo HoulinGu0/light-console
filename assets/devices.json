@@ -1,0 +1,120 @@
+[
+  {
+    "index": 0,
+    "name": "ASUS TUF GAMING B650M-PLUS WIFI",
+    "type": "0",
+    "description": "",
+    "vendor": "",
+    "version": "",
+    "serial": "",
+    "location": "",
+    "active_mode": 0,
+    "modes": [
+      {
+        "name": "Direct",
+        "value": 255
+      },
+      {
+        "name": "Off",
+        "value": 0
+      },
+      {
+        "name": "Static",
+        "value": 1
+      },
+      {
+        "name": "Breathing",
+        "value": 2
+      },
+      {
+        "name": "Flashing",
+        "value": 3
+      },
+      {
+        "name": "Spectrum Cycle",
+        "value": 4
+      },
+      {
+        "name": "Rainbow",
+        "value": 5
+      },
+      {
+        "name": "Chase Fade",
+        "value": 7
+      },
+      {
+        "name": "Chase",
+        "value": 9
+      },
+      {
+        "name": "Spectrum Cycle Breathing",
+        "value": 6
+      },
+      {
+        "name": "Spectrum Cycle Chase Fade",
+        "value": 8
+      },
+      {
+        "name": "Spectrum Cycle Chase",
+        "value": 10
+      },
+      {
+        "name": "Spectrum Cycle Wave",
+        "value": 11
+      },
+      {
+        "name": "Chase Rainbow Pulse",
+        "value": 12
+      },
+      {
+        "name": "Random Flicker",
+        "value": 13
+      },
+      {
+        "name": "Gentle Transition",
+        "value": 16
+      },
+      {
+        "name": "Wave Propagation",
+        "value": 17
+      },
+      {
+        "name": "Wave Propagation Pause",
+        "value": 18
+      },
+      {
+        "name": "Red Pulse",
+        "value": 19
+      }
+    ],
+    "zones": [
+      {
+        "name": "Aura Mainboard",
+        "type": "1",
+        "led_count": 1,
+        "resizable": null
+      },
+      {
+        "name": "Addressable RGB Header 1",
+        "type": "1",
+        "led_count": 0,
+        "resizable": null
+      },
+      {
+        "name": "Addressable RGB Header 2",
+        "type": "1",
+        "led_count": 0,
+        "resizable": null
+      },
+      {
+        "name": "Addressable RGB Header 3",
+        "type": "1",
+        "led_count": 0,
+        "resizable": null
+      }
+    ],
+    "leds": [
+      "Aura Mainboard, LED 1"
+    ]
+  }
+]

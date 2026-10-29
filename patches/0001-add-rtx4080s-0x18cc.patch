@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+Subject: [PATCH] NVIDIA Illumination: add RTX 4080 SUPER FE variant 0x18CC
+
+OpenRGB's device_list matches PCI IDs as an exact quadruple. The retail
+RTX 4080 SUPER Founders Edition in this machine reports
+  VEN_10DE&DEV_2702&SUBSYS_18CC10DE
+but pci_ids.h only defines NVIDIA_RTX4080S_FE_SUB_DEV = 0x18CB, so the
+illumination probe silently skips the card and nothing is logged.
+Adding the 0x18CC subsystem ID makes OpenRGB register the controller.
+
+Verified on: RTX 4080 SUPER FE, VBIOS 95.03.44.00.90, driver 32.0.16.1742.
+After the patch, OpenRGB logs:
+  [Debug] [NVIDIA GeForce RTX 4080 SUPER FE (0x18CC)] Nvidia NvAPI Illumination GPU found
+  [Info ] [DetectionManager] Registering RGB controller NVIDIA GeForce RTX 4080 SUPER FE (0x18CC)
+
+Note: the controller registers but reports numIllumZonesControl = 0 on this
+driver, so no addressable zones are exposed yet. The patch only fixes
+detection; see docs/THIRD-PARTY.md in the calling project for details.
+---
+diff --git a/pci_ids/pci_ids.h b/pci_ids/pci_ids.h
+--- a/pci_ids/pci_ids.h
++++ b/pci_ids/pci_ids.h
+@@ -147,12 +147,13 @@
+ #define NVIDIA_RTX3080TI_FE_SUB_DEV                             0x1535
+ #define NVIDIA_RTX3090_FE_SUB_DEV                               0x147D
+ #define NVIDIA_RTX3090TI_FE_SUB_DEV                             0x1618
+ #define NVIDIA_RTX4080_FE_SUB_DEV                               0x167A
+ #define NVIDIA_RTX4080_FE_SUB_DEV2                              0x1794
+ #define NVIDIA_RTX4080S_FE_SUB_DEV                              0x18CB
++#define NVIDIA_RTX4080S_FE_SUB_DEV2                             0x18CC
+ #define NVIDIA_RTX4090_FE_SUB_DEV                               0x165B
+ #define NVIDIA_RTX4090_FE_SUB_DEV2                              0x16F4
+ #define NVIDIA_RTX5080_FE_SUB_DEV                               0x2095
+ #define NVIDIA_RTX5090_FE_SUB_DEV                               0x2057
+ 
+ /*---------------------------------------------------------*\
+diff --git a/Controllers/NVIDIAIlluminationController/NVIDIAIlluminationControllerDetect_Windows_Linux.cpp b/Controllers/NVIDIAIlluminationController/NVIDIAIlluminationControllerDetect_Windows_Linux.cpp
+--- a/Controllers/NVIDIAIlluminationController/NVIDIAIlluminationControllerDetect_Windows_Linux.cpp
++++ b/Controllers/NVIDIAIlluminationController/NVIDIAIlluminationControllerDetect_Windows_Linux.cpp
+@@ -73,12 +73,13 @@
+     {NVIDIA_VEN,    NVIDIA_RTX4070_DEV,             PALIT_SUB_VEN,    PALIT_RTX4070_SUB_DEV,                          NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGB,     "Palit GeForce RTX 4070"                      },
+     {NVIDIA_VEN,    NVIDIA_RTX4070S_DEV,            PALIT_SUB_VEN,    PALIT_RTX4070S_SUB_DEV,                         NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGB,     "Palit GeForce RTX 4070 SUPER Dual"           },
+     {NVIDIA_VEN,    NVIDIA_RTX4070_DEV,             GAINWARD_SUB_VEN, GAINWARD_RTX_4070_GHOST_SUB_DEV,                NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "Gainward GeForce RTX 4070 Ghost"             },
+     {NVIDIA_VEN,    NVIDIA_RTX4080_DEV,             NVIDIA_SUB_VEN,   NVIDIA_RTX4080_FE_SUB_DEV,                      NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 4080 FE"                  },
+     {NVIDIA_VEN,    NVIDIA_RTX4080_DEV,             NVIDIA_SUB_VEN,   NVIDIA_RTX4080_FE_SUB_DEV2,                     NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 4080 FE"                  },
+     {NVIDIA_VEN,    NVIDIA_RTX4080S_DEV,            NVIDIA_SUB_VEN,   NVIDIA_RTX4080S_FE_SUB_DEV,                     NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 4080 SUPER FE"            },
++    {NVIDIA_VEN,    NVIDIA_RTX4080S_DEV,            NVIDIA_SUB_VEN,   NVIDIA_RTX4080S_FE_SUB_DEV2,                     NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 4080 SUPER FE (0x18CC)"            },
+     {NVIDIA_VEN,    NVIDIA_RTX4090_DEV,             NVIDIA_SUB_VEN,   NVIDIA_RTX4090_FE_SUB_DEV,                      NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 4090 FE"                  },
+     {NVIDIA_VEN,    NVIDIA_RTX4090_DEV,             NVIDIA_SUB_VEN,   NVIDIA_RTX4090_FE_SUB_DEV2,                     NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 4090 FE"                  },
+     {NVIDIA_VEN,    NVIDIA_RTX5080_DEV,             NVIDIA_SUB_VEN,   NVIDIA_RTX5080_FE_SUB_DEV,                      NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 5080 FE"                  },
+     {NVIDIA_VEN,    NVIDIA_RTX5090_DEV,             NVIDIA_SUB_VEN,   NVIDIA_RTX5090_FE_SUB_DEV,                      NVIDIA_ILLUMINATION_V1,     TREATS_RGBW_AS_RGBW,    "NVIDIA GeForce RTX 5090 FE"                  },
+ };
+ 
+-- 
+2.43.0

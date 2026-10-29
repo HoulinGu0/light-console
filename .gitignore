@@ -1,0 +1,37 @@
+# ---- 第三方二进制：用 fetch_openrgb.ps1 拉取，不入库 ----
+assets/OpenRGB/
+assets/OpenRGB_*.zip
+assets/OpenRGB/**/*.bak
+**/OpenRGB.exe
+**/OpenRGB.exe.bak
+
+# ---- 运行时状态与用户配置 ----
+runtime/
+config.json
+
+# ---- 本地完整性记录：含本机绝对路径，不适合公开仓库 ----
+MANIFEST.md
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---- 日志与临时产物 ----
+*.log
+!docs/**/*.log
+*.tmp
+*.bak
